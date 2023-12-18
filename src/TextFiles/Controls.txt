@@ -1,0 +1,4 @@
+ Movement:
+
+ *To move the hunter, press the A, S, D, or W key.
+ *To move the target, the game will randomly move it around the board.

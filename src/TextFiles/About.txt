@@ -1,0 +1,10 @@
+ Welcome to HuntGame!
+ HuntGame is a captivating Java-based strategy game where you,
+ as the hunter, aim to catch a dynamic target on the game board.
+
+ About the Development:
+ Crafted with Java and Swing,
+ HuntGame offers a seamless and visually engaging user interface.
+
+ Developers: [Martin, Ninib, Mattias, Pejman]
+ Version: [1.1.0]
