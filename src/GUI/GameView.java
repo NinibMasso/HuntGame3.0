@@ -7,17 +7,17 @@ import java.awt.*;
 
 public class GameView extends JPanel {
     private final ImageIcon backgroundImage = new ImageIcon("src/IconImages/map2.jpg");
-    private JPanel gamePanel;
-    private JPanel topPanel;
-    private final JLabel backgroundLabel  = new JLabel();
+    private  JPanel gamePanel;
+    private  JPanel topPanel;
+    private final JLabel backgroundLabel = new JLabel();
     private final JLabel messageLabel = new JLabel();
     private final JLabel winLabel = new JLabel("Wins: 0");
     private final JLabel lossLabel = new JLabel("Losses: 0");
-    private final MainFrame mainFrame;
+    private  MainFrame mainFrame;
     private final GameController controller;
 
 
-    public GameView (MainFrame mainFrame){
+    public GameView(MainFrame mainFrame) {
         this.controller = new GameController(this);
         this.mainFrame = mainFrame;
 
@@ -41,6 +41,11 @@ public class GameView extends JPanel {
         add(topPanel, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
     }
+
+    public GameView(){
+        this.controller = new GameController();
+    }
+
     public void updateView(String[][] gameBoard, GameController controller) {
         backgroundLabel.removeAll();
         backgroundLabel.setLayout(new GridLayout(10, 10));
@@ -50,7 +55,7 @@ public class GameView extends JPanel {
             for (int j = 0; j < gameBoard.length; j++) {
                 onIndex = gameBoard[i][j];
                 JButton button = new JButton();
-                if (onIndex.equals( controller.getModel().getHunter().getCharMark())){
+                if (onIndex.equals(controller.getModel().getHunter().getCharMark())) {
                     button.setIcon(controller.getModel().getHunter().getIcon());
                 } else if (onIndex.equals(controller.getModel().getTarget().getCharMark())) {
                     button.setIcon(controller.getModel().getTarget().getIcon());
@@ -72,7 +77,11 @@ public class GameView extends JPanel {
         this.repaint();
     }
 
-    public void showMainMenu(){
+    public void showMainMenu() {
         mainFrame.showMainMenu();
+    }
+
+    public GameController getController() {
+        return controller;
     }
 }

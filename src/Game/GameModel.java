@@ -4,16 +4,28 @@ import Factory.GridComponent;
 import Factory.GridComponentFactory;
 import Factory.GridComponentTypes;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class GameModel {
     private GameBoard gameBoard;
     private GridComponent hunter;
     private GridComponent target;
     private Player player;
+    private GameController controller;
+
+    private String highScoreText;
     private int wins = 0;
     private int losses = 0;
     public GameModel(){
+        this.highScoreText = highScoreText();
+    }
+    public GameModel(GameController controller){
+        this.controller = controller;
+        this.highScoreText = highScoreText();
+        this.player = new Player();
         initializeGame();
     }
     public void initializeGame() {
@@ -77,5 +89,56 @@ public class GameModel {
 
     public int getLosses() {
         return losses;
+    }
+
+    public String highScoreText(){
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/TextFiles/LogFile"))) {
+            StringBuilder highscoreTextBuilder = new StringBuilder();
+            highscoreTextBuilder.append("Top 3 Players:\n");
+            LinkedList<Player> playerStatsList = new LinkedList<>();
+
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length == 3) {
+                    String name = tokens[0];
+                    int playerId = Integer.parseInt(tokens[1].trim());
+                    String[] splitTokens = tokens[2].split(" ");
+                    int wins = Integer.parseInt(splitTokens[1]);
+                    int losses = Integer.parseInt(splitTokens[3]);
+                    playerStatsList.add(new Player(name, playerId, wins, losses));
+                }
+            }
+            playerStatsList.sort((p1, p2) -> {
+                int result = Integer.compare(p2.getWins() - p2.getLosses(), (p1.getWins() - p1.getLosses()));
+                if (result == 0) {
+                    result = Integer.compare(p2.getLosses(), p1.getLosses());
+                }
+                return result;
+            });
+
+            int count = 0;
+            for (Player player : playerStatsList) {
+                highscoreTextBuilder.append(player.getName())
+                        .append(", ")
+                        .append(player.getPlayerId())
+                        .append(", ")
+                        .append(": Wins: ").append(player.getWins())
+                        .append(", Losses: ").append(player.getLosses())
+                        .append("\n");
+
+                count++;
+                if (count >= 3) {
+                    break;
+                }
+
+            }
+            this.highScoreText = highscoreTextBuilder.toString();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return highScoreText;
     }
 }

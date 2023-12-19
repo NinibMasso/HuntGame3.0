@@ -7,7 +7,7 @@ public class MainFrame {
 
     private final JFrame frame;
 
-    public MainFrame(){
+    public MainFrame() {
         frame = new JFrame("HuntGame");
         frame.setSize(600, 615);
         frame.setLocationRelativeTo(null);
@@ -23,11 +23,12 @@ public class MainFrame {
         frame.repaint();
         frame.revalidate();
     }
-    public void showMainMenu(){
+
+    public void showMainMenu() {
         SwingUtilities.invokeLater(() -> {
             clear();
             MainMenuView mainMenuView = new MainMenuView(this);
-            frame.setSize(615,442);
+            frame.setSize(615, 442);
             frame.setLocationRelativeTo(null);
             frame.getContentPane().add(mainMenuView);
             frame.revalidate();
@@ -35,9 +36,9 @@ public class MainFrame {
         });
     }
 
-    public void showGameView(){
+    public void showGameView() {
         SwingUtilities.invokeLater(() -> {
-            clear();;
+            clear();
             GameView gameView = new GameView(this);
             frame.setSize(615, 685);
             frame.setLocationRelativeTo(null);
@@ -48,7 +49,7 @@ public class MainFrame {
         });
     }
 
-    public JButton buttonDesigner(JButton button){
+    public JButton buttonDesigner(JButton button) {
         button.setPreferredSize(new Dimension(200, 50));
         button.setBackground(Color.black);
         button.setForeground(Color.white);
