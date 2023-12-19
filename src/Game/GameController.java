@@ -65,7 +65,7 @@
                                 if (option == JOptionPane.YES_OPTION) {
                                     model.initializeGame();
                                 }else {
-                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/Winstreak", true);
+                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/LogFile", true);
                                          BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
                                         bufferedWriter.append(player.getName()).append(", ").
                                                 append(String.valueOf(player.getPlayerId())).append(", ").
@@ -88,7 +88,7 @@
                                 if (option == JOptionPane.YES_OPTION){
                                     model.initializeGame();
                                 }else {
-                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/Winstreak", true);
+                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/LogFile", true);
                                          BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
                                         bufferedWriter.append(player.getName()).append(", ").
                                                 append(String.valueOf(player.getPlayerId())).append(", ").

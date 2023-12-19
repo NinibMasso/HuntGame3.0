@@ -220,7 +220,7 @@
             CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
             cardLayout.show(cardPanel, "high_score");
 
-            try (BufferedReader reader = new BufferedReader(new FileReader("src/TextFiles/Winstreak"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("src/TextFiles/LogFile"))) {
                 StringBuilder highscoreTextBuilder = new StringBuilder();
                 highscoreTextBuilder.append("Top 3 Players:\n");
                 LinkedList<Player> playerStatsList = new LinkedList<>();
@@ -276,7 +276,7 @@
             cardLayout.show(cardPanel, "last_played");
             LinkedList<String> lastTwoLines = new LinkedList<>();
 
-            try (BufferedReader reader = new BufferedReader(new FileReader("src/TextFiles/Winstreak"))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("src/TextFiles/LogFile"))) {
 
 
 
