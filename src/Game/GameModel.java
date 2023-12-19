@@ -10,6 +10,7 @@ public class GameModel {
     private GameBoard gameBoard;
     private GridComponent hunter;
     private GridComponent target;
+    private Player player;
     private int wins = 0;
     private int losses = 0;
     public GameModel(){
@@ -22,6 +23,10 @@ public class GameModel {
         gameBoard = new GameBoard(hunter.getCharMark(), target.getCharMark());
         gameBoard.setMarkerX(4, 0, hunter.getCharMark());
         gameBoard.setTargetIT(4, 9, target.getCharMark());
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public GameMessage getMessage() {

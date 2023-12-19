@@ -5,18 +5,31 @@
     import javax.swing.*;
     import java.awt.event.KeyAdapter;
     import java.awt.event.KeyEvent;
+    import java.io.BufferedWriter;
+    import java.io.FileWriter;
     import java.io.IOException;
+    import java.time.LocalDateTime;
+    import java.time.format.DateTimeFormatter;
     import java.util.InputMismatchException;
 
     public class GameController {
         private final GameModel model;
         private final GameView view;
 
+        private final Player player;
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        String formattedDateTime = currentDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+
         public GameController(GameView view) {
             this.model = new GameModel();
             this.view = view;
             addActionListeners();
+            player = new Player();
             view.updateView(this.model.getGameBoard(), this);
+            formattedDateTime = formattedDateTime.substring(0, formattedDateTime.lastIndexOf(':'));
         }
         public GameModel getModel() {
             return model;
@@ -51,8 +64,16 @@
                                         JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION) {
                                     model.initializeGame();
-                                }else
+                                }else {
+                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/Winstreak", true);
+                                         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+                                        bufferedWriter.append(player.getName()).append(", ").
+                                                append(String.valueOf(player.getPlayerId())).append(", ").
+                                                append(String.valueOf(getModel().getWins())).append(" wins " +
+                                                        getModel().getLosses() + " losses "  + formattedDateTime + "\n");
+                                    }
                                     view.showMainMenu();
+                                }
                             } else {
                                 model.moveTarget();
                                 model.getMessage().howTo();
@@ -60,13 +81,22 @@
                             } if (model.checkLose()) {
                                 model.getMessage().loser();
                                 view.updateView(model.getGameBoard(), GameController.this);
-                                int option = JOptionPane.showConfirmDialog(null, "Sorry, you lost!\nDo you want to play again?",
+                                int option = JOptionPane.showConfirmDialog(null, "Sorry, you lost!\n" +
+                                                "Do you want to play again?",
                                         "GAME OVER",
                                         JOptionPane.YES_NO_OPTION);
                                 if (option == JOptionPane.YES_OPTION){
                                     model.initializeGame();
-                                }else
+                                }else {
+                                    try (FileWriter fileWriter = new FileWriter("src/TextFiles/Winstreak", true);
+                                         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+                                        bufferedWriter.append(player.getName()).append(", ").
+                                                append(String.valueOf(player.getPlayerId())).append(", ").
+                                                append(String.valueOf(getModel().getWins())).append(" wins " +
+                                                       getModel().getLosses() + " losses "  + formattedDateTime + "\n");
+                                    }
                                     view.showMainMenu();
+                                }
                             }
                             view.updateView(model.getGameBoard(), GameController.this);
                         } catch (InputMismatchException | IOException ex) {
